@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto, ProductDto } from './dtos/product.dto';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class ProductService {
+    constructor(
+        @Inject(forwardRef(() => UserService))
+        private readonly userService: UserService
+    ) {}
     products: ProductDto[] = [
         {
             id: 1,
