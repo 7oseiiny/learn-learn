@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, UserDto } from './dtos/user.dto';
+import { ProductService } from './../product/product.service';
 
 @Injectable()
 export class UserService {
+    constructor(private readonly productService: ProductService) {}
     users:UserDto[]=[
             {
                 user: 'JohnDoe',
@@ -33,6 +35,7 @@ export class UserService {
             if(!user) {
                 throw new NotFoundException('User not found');
             }
-            return user;
+            let product = this.productService.findById(1);
+            return { user, product };
         }
 }
