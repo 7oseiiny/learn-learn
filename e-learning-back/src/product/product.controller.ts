@@ -6,4 +6,16 @@ import { ProductService } from './product.service';
 export class ProductController {
      constructor(private productService: ProductService) {}
      
+     @Get()
+     getProducts() {
+         return this.productService.getProducts();
+     }
+     @Post()
+     createProduct(@Body() createProductDto: CreateProductDto) {
+         return this.productService.createProduct(createProductDto);
+     }
+     @Get(':id')
+     getProductById(@Param('id') id: string) {
+         return this.productService.getProductById(id);
+     }
 }

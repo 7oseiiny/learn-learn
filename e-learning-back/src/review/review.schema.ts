@@ -10,7 +10,13 @@ export class Review {
   comment: string;
 
   @Prop()
-  rating: string;
+  rating: number;
+
+  @Prop({ type: String, ref: 'Product' })
+  productId: string;
+
+  @Prop({ type: String, ref: 'User' })
+  userId: string;
 
   
 }
