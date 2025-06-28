@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Review } from './review.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Review } from './review.schema';
 
 @Injectable()
 export class ReviewService {
     constructor(
-        @InjectRepository(Review) 
-        private readonly reviewRepository: Repository<Review>
+        @InjectModel(Review.name)
+        private readonly UserModule: Model<Review>
     ) {}
-    getReviews() {
-        return this.reviewRepository.find();
-    }
+   
 }

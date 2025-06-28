@@ -7,8 +7,6 @@ export class ReviewController {
         private readonly reviewService: ReviewService
     ) {}
     
-    @Get()
-    getReviews() {
-        return this.reviewService.getReviews();
-    }
+
+    
 }
