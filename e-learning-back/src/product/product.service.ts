@@ -1,45 +1,26 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto, ProductDto } from './dtos/product.dto';
-import { UserService } from 'src/user/user.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from './product.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProductService {
     constructor(
-        @Inject(forwardRef(() => UserService))
-        private readonly userService: UserService
+        @InjectRepository(Product)
+        private readonly productRepository: Repository<Product>,
     ) {}
-    products: ProductDto[] = [
-        {
-            id: 1,
-            name: 'Product 1',
-            description: 'Description 1',
-            price: 100
-        },
-        {
-            id: 2,
-            name: 'Product 2',
-            description: 'Description 2',
-            price: 200
-        }
-    ];
-
+    
     findAll() {
-        return this.products;
+        return this.productRepository.find();
     }
-
     create(body: CreateProductDto) {
-        const newProduct: ProductDto = {
-            id: this.products.length + 1,
-            ...body
-        };
-        this.products.push(newProduct);
-        return newProduct;
+        return this.productRepository.save(this.productRepository.create(body));
     }
-
-    findById(id: number) {
-        const product = this.products.find(product => product.id === id)
+    async findById(id:number){
+        const product = await this.productRepository.findOne({ where: { id } });
         if (!product) {
-            throw new NotFoundException('Product not found');
+            throw new NotFoundException(`Product with ID ${id} not found`);
         }
         return product;
     }

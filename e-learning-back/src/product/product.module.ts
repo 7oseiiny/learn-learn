@@ -16,7 +16,7 @@ import { ReviewModule } from 'src/review/review.module';
     forwardRef(() => UserModule) ,
     forwardRef(() => ProductModule),
     forwardRef(() => ReviewModule),
-    TypeOrmModule.forFeature([Product,Review,User])
+    TypeOrmModule.forFeature([Product])
   ],
 })
 export class ProductModule {}
