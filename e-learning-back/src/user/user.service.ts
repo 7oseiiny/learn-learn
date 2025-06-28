@@ -4,6 +4,7 @@ import { ProductService } from './../product/product.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
+import { CreateReviewDto } from 'src/review/dtos/review.dto';
 
 @Injectable()
 export class UserService {
@@ -32,5 +33,9 @@ export class UserService {
         let user = await this.findById(id);
         user = { ...user, ...body };
         return this.userRepository.save(user);
+    }
+
+    addReviewToProduct(userId: number, productId: number ,review: CreateReviewDto) {
+        return this.productService.addReviewToProduct(userId, productId , review);
     }
 }

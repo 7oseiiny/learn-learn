@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/c
 import { CreateUserDto, UpdateUserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
+import { CreateReviewDto } from 'src/review/dtos/review.dto';
 
 @Controller('user')
 export class UserController { 
@@ -37,6 +38,14 @@ export class UserController {
     @Put(':id')
     update(@Param('id',ParseIntPipe) id: number, @Body() body: UpdateUserDto) {
         return this.userService.update(id, body);
+    }
+    @Post(':userId/product/:productId/review')
+    addReviewToProduct(
+        @Param('userId', ParseIntPipe) userId: number,
+        @Param('productId', ParseIntPipe) productId: number,
+        @Body() review: CreateReviewDto
+    ) {
+        return this.userService.addReviewToProduct(userId, productId,review);
     }
    
 }
