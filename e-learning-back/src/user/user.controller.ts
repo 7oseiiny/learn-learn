@@ -14,15 +14,15 @@ export class UserController {
         return this.userService.getUsers();
     }
 
-    // @Post()
-    // createUser(@Body() createUserDto: CreateUserDto) {
-    //     return this.userService.createUser(createUserDto);
-    // }
+    @Post()
+    createUser(@Body() createUserDto: CreateUserDto) {
+        return this.userService.createUser(createUserDto);
+    }
 
-    // @Get(':id')
-    // getUserById(@Param('id' , ParseIntPipe) id: number) {
-    //     return this.userService.getUserById(id);
-    // }
+    @Get(':id')
+    getUserById(@Param('id') id: string) {
+        return this.userService.getUserById(id);
+    }
    
    
 }
