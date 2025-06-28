@@ -1,14 +1,13 @@
-import { Product } from "src/product/product.entity";
-import { User } from "src/user/user.entity";
+import { Review } from "src/review/review.entity";
 import { CURRENT_TIMESTAMP } from "src/utils/reusable";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
-@Entity({name: 'reviews'})
-export class Review {
+@Entity({name: 'products'})
+export class Product {
     @PrimaryGeneratedColumn()
     id: number;
-    
+
     @CreateDateColumn({type: 'timestamp',default: () => CURRENT_TIMESTAMP})
     createdAt: Date;
 
@@ -16,11 +15,16 @@ export class Review {
     updatedAt: Date;
     ////////////////////////////////////////////////////////////////////////////////////////////
     @Column()
-    comment: string;
+    name: string;
 
-    @ManyToOne(() => Product, (product) => product.reviews)
-    product: Product
+    @Column()
+    description: string;
 
-    @ManyToOne(() => User, (user) => user.reviews)
-    user: User
+    @Column()
+    price: number;
+
+    @OneToMany(() => Review, (review) => review.product)
+    reviews: Product[];
+
+    
 }

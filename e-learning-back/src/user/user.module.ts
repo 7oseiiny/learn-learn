@@ -4,6 +4,8 @@ import { UserService } from './user.service';
 import { ProductModule } from 'src/product/product.module';
 import { User } from './user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Review } from 'src/review/review.entity';
+import { ReviewModule } from 'src/review/review.module';
 
 @Module({
   controllers: [UserController],
@@ -11,7 +13,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   exports: [UserService],
   imports: [ 
     forwardRef(() => ProductModule) ,
-    TypeOrmModule.forFeature([User])
+    forwardRef(() => ReviewModule) ,
+    TypeOrmModule.forFeature([User,Review])
   ]
 })
 export class UserModule {}
