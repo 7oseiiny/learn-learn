@@ -1,16 +1,28 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './dtos/user.dto';
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { CreateUserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
-import { CreateReviewDto } from 'src/review/dtos/review.dto';
 
 @Controller('user')
 export class UserController { 
     constructor(
         private userService: UserService,
-        private readonly configService: ConfigService
     ) {}
    
+    @Get()
+    getUsers() {
+        return this.userService.getUsers();
+    }
+
+    // @Post()
+    // createUser(@Body() createUserDto: CreateUserDto) {
+    //     return this.userService.createUser(createUserDto);
+    // }
+
+    // @Get(':id')
+    // getUserById(@Param('id' , ParseIntPipe) id: number) {
+    //     return this.userService.getUserById(id);
+    // }
    
    
 }

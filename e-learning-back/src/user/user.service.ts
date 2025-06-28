@@ -10,6 +10,11 @@ export class UserService {
         private readonly UserModule: Model<User>
     ) { }
     
+    async getUsers() {
+        const users = await this.UserModule.find()
+        return users;
+    }
+    
 
 
 }
