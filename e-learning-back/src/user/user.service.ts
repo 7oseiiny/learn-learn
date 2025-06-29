@@ -23,6 +23,10 @@ export class UserService {
         const user = await this.UserModule.findById( id );
         return user;
     }
+    async getUserByUser(user: string) {
+        const userExist = await this.UserModule.findOne({ user });
+        return userExist;
+    }
     
 
 

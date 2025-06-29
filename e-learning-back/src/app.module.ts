@@ -7,6 +7,7 @@ import { User } from './user/user.schema';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ReviewModule } from './review/review.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
     }),
     ReviewModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
