@@ -27,6 +27,9 @@ export class UserService {
         const userExist = await this.UserModule.findOne({ user });
         return userExist;
     }
+    async getCurrentUser(id :string) {
+        return await this.UserModule.findById(id) 
+    }
     
 
 
