@@ -12,8 +12,14 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     UserModule,
     ProductModule,
-    MongooseModule.forRoot('mongodb+srv://admin:itiAmazon@cluster0.ke6bvtv.mongodb.net/nest'),
     ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV || 'development'}` }),
+    MongooseModule.forRootAsync({
+      // imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('DATABASE_URL', ''),
+      }),
+    }),
     ReviewModule,
   ],
   controllers: [AppController],
