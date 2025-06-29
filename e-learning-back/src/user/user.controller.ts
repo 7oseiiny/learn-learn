@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { Request } from 'express';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('user')
 export class UserController { 
@@ -24,9 +25,8 @@ export class UserController {
     
     @Get('current-user')
     @UseGuards(AuthGuard)
-    getCurrentUser(@Req() req:Request){
-        const {userId} = req['user'] 
-        return this.userService.getCurrentUser(userId)
+    getCurrentUser(@CurrentUser() user:any){
+        return this.userService.getCurrentUser(user.userId)
     }
     
     @Get(':id')
