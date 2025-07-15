@@ -4,23 +4,30 @@ import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcryptjs';
 import { LoginDto } from './dtos/auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { RoleService } from 'src/role/role.service';
 
 @Injectable()
 export class AuthService {
 
     constructor(
         private readonly JwtService: JwtService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        private readonly roleService: RoleService
     ) {}
 
     async register (user: CreateUserDto) {
-        const userExist = await this.userService.getUserByUser(user.user);
+        const userExist = await this.userService.getUserByUser(user.username);
         if (userExist) { 
             throw new NotFoundException('User already exists');
         }
         const salt = bcrypt.genSaltSync(10);
         const pass = bcrypt.hashSync(user.pass, salt);
 
+        const role = await this.roleService.getRoleByName(user.role);
+        if (!role) {
+            throw new NotFoundException('Role not found');
+        }
+        user.role = role._id.toString() // Assuming role is an ObjectId in the User schema
         const newUser = await this.userService.createUser({...user,pass});
 
         return {
@@ -30,7 +37,7 @@ export class AuthService {
     }
         
     async login(body :LoginDto) {
-        const userExist =await this.userService.getUserByUser(body.user);
+        const userExist =await this.userService.getUserByUser(body.username);
         if (!userExist) {
             throw new NotFoundException('User not found');
         }

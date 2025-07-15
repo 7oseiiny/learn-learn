@@ -8,9 +8,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ReviewModule } from './review/review.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { RoleController } from './role/role.controller';
+import { RoleService } from './role/role.service';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
+    RoleModule,
     UserModule,
     ProductModule,
     ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV || 'development'}` }),
@@ -23,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     ReviewModule,
     AuthModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

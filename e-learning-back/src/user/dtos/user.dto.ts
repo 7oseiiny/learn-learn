@@ -5,30 +5,36 @@ export class UserDto {
     id: number;
     
     @IsString()
-    user: string;
+    username: string;
 
     @IsString()
     email: string;
 
     @IsString()
     pass: string;
+
+    @IsString()
+    role: string;
 }
 
 export class CreateUserDto {
     @IsString()
-    user: string;
+    username: string;
 
     @IsString()
     email: string;
 
     @IsString()
     pass: string;
+
+    @IsString()
+    role: string
 }
 
 export class UpdateUserDto {
     @IsString()
     @IsOptional()
-    user?: string;
+    username?: string;
 
     @IsString()
     @IsOptional()
@@ -37,4 +43,8 @@ export class UpdateUserDto {
     @IsString()
     @IsOptional()
     pass?: string;
+
+    @IsString()
+    @IsOptional()
+    role: string
 }

@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from 'src/user/user.module';
+import { RoleModule } from 'src/role/role.module';
 
 @Module({
   controllers: [AuthController],
@@ -11,6 +12,7 @@ import { UserModule } from 'src/user/user.module';
   exports: [AuthService],
   imports: [
     ConfigModule,
+    RoleModule,
     forwardRef(() => UserModule), 
     JwtModule.registerAsync({
       global: true,
