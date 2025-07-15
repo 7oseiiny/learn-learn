@@ -40,4 +40,11 @@ export class RoleService {
         }   
         return role;
     }
+    async getRoleById(id: string) {
+        const role = await this.RoleModel.findById(id);
+        if (!role) {
+            throw new NotFoundException('Role not found');
+        }   
+        return role;
+    }
 }
