@@ -45,7 +45,7 @@ export class AuthService {
         if (!isMatch) {
             throw new NotFoundException('Invalid credentials');
         }
-        const payload = { userId: userExist._id };
+        const payload = { userId: userExist._id , username: userExist.username, role: userExist.role };
         const jwt =await this.JwtService.signAsync(payload)
 
         if (!jwt) {
