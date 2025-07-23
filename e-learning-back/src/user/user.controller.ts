@@ -13,6 +13,7 @@ export class UserController {
     ) { }
 
     @Get()
+    @UseInterceptors(UserSerializerInterceptor)
     @SetMetadata('perms', ['getpass'])
     @UseGuards(AuthGuard)
     getUsers() {
