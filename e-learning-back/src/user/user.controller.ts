@@ -3,8 +3,6 @@ import { CreateUserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { LoggerInterceptor } from 'src/utils/interceptors/logger.interceptor';
-import { UserSerializerInterceptor } from 'src/utils/interceptors/user.interceptor';
 
 @Controller('user')
 export class UserController {

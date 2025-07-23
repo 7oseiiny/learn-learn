@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -12,7 +12,7 @@ import { RoleController } from './role/role.controller';
 import { RoleService } from './role/role.service';
 import { RoleModule } from './role/role.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { UserSerializerInterceptor } from './utils/interceptors/user.interceptor';
+import { RemovePassInterceptor } from './utils/interceptors/user.interceptor';
 
 @Module({
   imports: [
@@ -29,16 +29,19 @@ import { UserSerializerInterceptor } from './utils/interceptors/user.interceptor
     }),
     ReviewModule,
     AuthModule,
-    
+
   ],
   controllers: [AppController],
   providers: [
     AppService,
     {
       provide: APP_INTERCEPTOR,
-      useClass: UserSerializerInterceptor, // Register the UserSerializerInterceptor globally
-
-    }
+      useClass: RemovePassInterceptor,
+    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: ClassSerializerInterceptor,
+    // },
   ],
 
 })
