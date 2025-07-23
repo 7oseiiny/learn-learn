@@ -20,6 +20,7 @@ export class User {
   @Prop({ type: String, ref: 'Role' })
   role: string;
 
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

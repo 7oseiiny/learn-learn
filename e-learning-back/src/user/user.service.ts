@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto } from './dtos/user.dto';
+import { plainToInstance } from 'class-transformer';
  
 @Injectable()
 export class UserService {
@@ -28,7 +29,8 @@ export class UserService {
         return userExist;
     }
     async getCurrentUser(id :string) {
-        return await this.UserModule.findById(id).lean()
+        let userDoc= await this.UserModule.findById(id).lean()
+        return plainToInstance(User, userDoc); 
     }
     
 
