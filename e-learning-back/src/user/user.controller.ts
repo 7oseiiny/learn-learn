@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { LoggerInterceptor } from 'src/utils/interceptors/logger.interceptor';
+import { UserSerializerInterceptor } from 'src/utils/interceptors/user.interceptor';
 
 @Controller('user')
 export class UserController {
@@ -26,6 +27,7 @@ export class UserController {
 
     @Get('current-user')
     @UseGuards(AuthGuard)
+    @UseInterceptors(UserSerializerInterceptor)
     getCurrentUser(@CurrentUser() user: any) {
         return this.userService.getCurrentUser(user.userId)
     }

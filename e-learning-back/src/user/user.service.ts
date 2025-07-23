@@ -29,8 +29,8 @@ export class UserService {
         return userExist;
     }
     async getCurrentUser(id :string) {
-        let userDoc= await this.UserModule.findById(id).lean()
-        return plainToInstance(User, userDoc); 
+        return await this.UserModule.findById(id).lean()
+        // return plainToInstance(User, userDoc); 
     }
     
 
