@@ -13,7 +13,6 @@ export class UserController {
     ) { }
 
     @Get()
-    @UseInterceptors(UserSerializerInterceptor)
     @SetMetadata('perms', ['getpass'])
     @UseGuards(AuthGuard)
     getUsers() {
@@ -28,7 +27,6 @@ export class UserController {
 
     @Get('current-user')
     @UseGuards(AuthGuard)
-    @UseInterceptors(UserSerializerInterceptor)
     getCurrentUser(@CurrentUser() user: any) {
         return this.userService.getCurrentUser(user.userId)
     }

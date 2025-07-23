@@ -11,6 +11,8 @@ import { AuthModule } from './auth/auth.module';
 import { RoleController } from './role/role.controller';
 import { RoleService } from './role/role.service';
 import { RoleModule } from './role/role.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { UserSerializerInterceptor } from './utils/interceptors/user.interceptor';
 
 @Module({
   imports: [
@@ -30,7 +32,14 @@ import { RoleModule } from './role/role.module';
     
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: UserSerializerInterceptor, // Register the UserSerializerInterceptor globally
+
+    }
+  ],
 
 })
 export class AppModule { }
