@@ -13,7 +13,7 @@ export class UserService {
     ) { }
     
     async getUsers() {
-        const users = await this.UserModule.find().lean();
+        const users = await this.UserModule.find();
         return users;
     }
     async createUser(createUserDto: CreateUserDto) {
