@@ -41,10 +41,14 @@ export class UserController {
     @UseGuards(AuthGuard)
     @UseInterceptors(uploadFile())
     updateCurrentUser(
-        @UploadedFile() file: Express.Multer.File ,
-        @Body() updateUserDto: UpdateUserDto, 
+        @UploadedFile() file: Express.Multer.File,
+        @Body() updateUserDto: UpdateUserDto,
         @CurrentUser() user: any
     ) {
-        return this.userService.updateCurrentUser(user.userId, {...updateUserDto, file: `${file.filename}.${file.mimetype.split('/')[1]}`});
+        let updateData = { ...updateUserDto };
+        if (file) {
+            updateData.file = `${file.filename}.${file.mimetype.split('/')[1]}`;
+        }
+        return this.userService.updateCurrentUser(user.userId, updateData);
     }
 }
