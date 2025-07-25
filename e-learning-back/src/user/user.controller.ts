@@ -5,6 +5,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { uploadFile } from 'src/utils/interceptors/uploads-file.interceptor';
 
 @Controller('user')
 export class UserController {
@@ -38,15 +39,7 @@ export class UserController {
 
     @Put()
     @UseGuards(AuthGuard)
-    @UseInterceptors(FileInterceptor('file',{
-        storage: diskStorage({
-            destination: './uploads',
-            filename: (req, file, cb) => {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-                cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1]);
-            }
-        })
-    }))
+    @UseInterceptors(uploadFile())
     updateCurrentUser(
         @UploadedFile() file: Express.Multer.File ,
         @Body() updateUserDto: UpdateUserDto, 
