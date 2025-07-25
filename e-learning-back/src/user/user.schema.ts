@@ -20,6 +20,9 @@ export class User {
   @Prop({ type: String, ref: 'Role' })
   role: string;
 
+  @Prop({ default: '' })
+  file: string;
+
 
 }
 

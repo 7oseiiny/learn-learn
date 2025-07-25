@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
-import { CreateUserDto } from './dtos/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dtos/user.dto';
 import { plainToInstance } from 'class-transformer';
  
 @Injectable()
@@ -32,6 +32,9 @@ export class UserService {
         return await this.UserModule.findById(id)
     }
     
+    async updateCurrentUser(id :string , updateUserDto: UpdateUserDto) {
+        return await this.UserModule.updateOne({ _id: id }, { $set: updateUserDto });
+    }
 
 
 }
