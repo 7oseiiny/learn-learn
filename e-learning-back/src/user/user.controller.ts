@@ -46,11 +46,7 @@ export class UserController {
         @Body() updateUserDto: UpdateUserDto,
         @CurrentUser() user: any
     ) {
-        let updateData = { ...updateUserDto };
-        if (file) {
-            updateData.file = `${file.filename}.${file.mimetype.split('/')[1]}`;
-        }
-        return this.userService.updateCurrentUser(user.userId, updateData);
+        return this.userService.updateCurrentUser(user.userId, updateUserDto , file);
     }
 
     @Get('image-user/:filename')
