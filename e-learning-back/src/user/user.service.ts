@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto, UpdateUserDto } from './dtos/user.dto';
 import { plainToInstance } from 'class-transformer';
+import { Response } from 'express';
  
 @Injectable()
 export class UserService {
@@ -35,6 +36,8 @@ export class UserService {
     async updateCurrentUser(id :string , updateUserDto: UpdateUserDto) {
         return await this.UserModule.updateOne({ _id: id }, { $set: updateUserDto });
     }
-
+    async getProfilePicture(filename: string , res : Response) {
+        return res.sendFile(filename, {root: 'uploads'})
+    }
 
 }
