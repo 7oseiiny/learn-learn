@@ -40,7 +40,7 @@ export class UserController {
 
     @Put()
     @UseGuards(AuthGuard)
-    @UseInterceptors(uploadFile())
+    @UseInterceptors(FileInterceptor('file'))
     updateCurrentUser(
         @UploadedFile() file: Express.Multer.File,
         @Body() updateUserDto: UpdateUserDto,

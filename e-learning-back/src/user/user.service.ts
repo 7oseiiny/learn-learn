@@ -41,6 +41,7 @@ export class UserService {
         this.removeRelatedFile(id,updateData);
         return await this.UserModule.updateOne({ _id: id }, updateData);
     }
+    
     async getProfilePicture(filename: string , res : Response) {
         return res.sendFile(filename, {root: 'uploads'})
     }
