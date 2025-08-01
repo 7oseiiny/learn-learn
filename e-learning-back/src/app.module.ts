@@ -13,9 +13,11 @@ import { RoleService } from './role/role.service';
 import { RoleModule } from './role/role.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RemovePassInterceptor } from './utils/interceptors/user.interceptor';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
+    MailModule,
     RoleModule,
     UserModule,
     ProductModule,
