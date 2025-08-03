@@ -7,6 +7,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { uploadFile } from 'src/utils/interceptors/uploads-file.interceptor';
 import { Response } from 'express';
+import { ApiSecurity } from '@nestjs/swagger';
+import { Authenticated } from 'src/auth/guards/Authenticated';
 
 @Controller('user')
 export class UserController {
@@ -15,8 +17,7 @@ export class UserController {
     ) { }
 
     @Get()
-    @SetMetadata('perms', ['getpass'])
-    @UseGuards(AuthGuard)
+    @Authenticated('getpass')
     getUsers() {
         return this.userService.getUsers();
     }
@@ -28,7 +29,7 @@ export class UserController {
 
 
     @Get('current-user')
-    @UseGuards(AuthGuard)
+    @Authenticated()
     getCurrentUser(@CurrentUser() user: any) {
         return this.userService.getCurrentUser(user.userId)
     }
@@ -39,7 +40,7 @@ export class UserController {
     }
 
     @Put()
-    @UseGuards(AuthGuard)
+    @Authenticated()
     @UseInterceptors(FileInterceptor('file'))
     updateCurrentUser(
         @UploadedFile() file: Express.Multer.File,
@@ -50,7 +51,7 @@ export class UserController {
     }
 
     @Get('image-user/:filename')
-    @UseGuards(AuthGuard)
+    @Authenticated()
     getProfilePicture(@Param('filename') filename: string , @Res() res: Response) {
         return this.userService.getProfilePicture(filename , res);
     }

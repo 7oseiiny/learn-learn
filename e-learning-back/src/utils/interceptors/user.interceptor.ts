@@ -8,6 +8,9 @@ export class RemovePassInterceptor implements NestInterceptor {
         return next.handle().pipe(
             map(data => {
                 // إذا كانت مصفوفة
+                if (data && typeof data !== 'object' && !Array.isArray(data)) {
+                    return data; // لا تغيير إذا لم تكن مصفوفة أو كائن
+                }
                 if (Array.isArray(data)) {
                     return data.map(item => {
                         // إذا كان Document من mongoose

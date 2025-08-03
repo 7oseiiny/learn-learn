@@ -55,7 +55,7 @@ export class AuthService {
         if (!jwt) {
             throw new NotFoundException('Error generating token');
         }
-        this.mailService.sendLoginNotification()
+        // this.mailService.sendLoginNotification()
         return {
             access_token: jwt,
         };
