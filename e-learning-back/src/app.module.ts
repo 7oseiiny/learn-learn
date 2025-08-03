@@ -21,7 +21,10 @@ import { MailModule } from './mail/mail.module';
     RoleModule,
     UserModule,
     ProductModule,
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV || 'development'}` }),
+    ConfigModule.forRoot({ 
+      isGlobal: true,
+      envFilePath: process.env.NODE_ENV !== 'production'? `.env.${process.env.NODE_ENV || 'development'}` : '.env'
+    }),
     MongooseModule.forRootAsync({
       // imports: [ConfigModule],
       inject: [ConfigService],
