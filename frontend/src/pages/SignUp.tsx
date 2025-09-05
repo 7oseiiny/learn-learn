@@ -12,10 +12,31 @@ const SignUp: React.FC = () => {
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
+    const validateEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    const validatePassword = (password: string) => {
+        // At least 8 chars, one letter, one number, one special char
+        return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(password);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setSuccess('');
+        if (name.trim().length < 3) {
+            setError('Name must be at least 3 characters.');
+            return;
+        }
+        if (!validateEmail(email)) {
+            setError('Invalid email format.');
+            return;
+        }
+        if (!validatePassword(pass)) {
+            setError('Password must be at least 8 characters, include a letter, a number, and a special character.');
+            return;
+        }
         try {
             await signUp(name, email, pass);
             setSuccess('Sign up successful! You can now sign in.');
