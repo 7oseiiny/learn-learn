@@ -1,11 +1,13 @@
 
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signUp } from '../api/auth';
 
 const SignUp: React.FC = () => {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [pass, setPass] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
@@ -15,7 +17,7 @@ const SignUp: React.FC = () => {
         setError('');
         setSuccess('');
         try {
-            await signUp(email, password);
+            await signUp(username, email, pass);
             setSuccess('Sign up successful! You can now sign in.');
             setTimeout(() => navigate('/signin'), 1500);
         } catch (err: any) {
@@ -27,6 +29,16 @@ const SignUp: React.FC = () => {
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
             <h1>Sign Up</h1>
             <form style={{ display: 'inline-block', marginTop: '2rem' }} onSubmit={handleSubmit}>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        required
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                        style={{ marginBottom: '1rem', padding: '0.5rem' }}
+                    />
+                </div>
                 <div>
                     <input
                         type="email"
@@ -42,8 +54,8 @@ const SignUp: React.FC = () => {
                         type="password"
                         placeholder="Password"
                         required
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        value={pass}
+                        onChange={e => setPass(e.target.value)}
                         style={{ marginBottom: '1rem', padding: '0.5rem' }}
                     />
                 </div>
