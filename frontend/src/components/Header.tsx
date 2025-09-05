@@ -31,7 +31,10 @@ const Header: React.FC = () => {
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', background: '#f5f5f5', marginBottom: '2rem' }}>
             <h2 style={{ margin: 0, cursor: 'pointer' }} onClick={() => navigate('/')}>Learn-Learn</h2>
             {isLoggedIn && (
-                <button onClick={handleLogout} style={{ padding: '0.5rem 1rem' }}>Logout</button>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button onClick={() => navigate('/profile')} style={{ padding: '0.5rem 1rem' }}>Profile</button>
+                    <button onClick={handleLogout} style={{ padding: '0.5rem 1rem' }}>Logout</button>
+                </div>
             )}
         </header>
     );
