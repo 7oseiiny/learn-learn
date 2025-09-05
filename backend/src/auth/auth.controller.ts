@@ -14,7 +14,7 @@ export class AuthController {
         return this.authService.register(body);
     }
 
-    @ApiBody({ schema: { example: { name: 'ahmed', pass: 'pass' } } })
+    @ApiBody({ schema: { example: { email: 'ahmed@gmail.com', pass: 'pass' } } })
     @Post('login')
     login(@Body() body: LoginDto) {
         return this.authService.login(body);

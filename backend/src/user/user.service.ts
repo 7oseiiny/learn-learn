@@ -31,6 +31,11 @@ export class UserService {
         const userExist = await this.UserModule.findOne({ name });
         return userExist;
     }
+
+    async getUserByEmail(email: string) {
+        const userExist = await this.UserModule.findOne({ email });
+        return userExist;
+    }
     async getCurrentUser(id: string) {
         return await this.UserModule.findById(id)
     }

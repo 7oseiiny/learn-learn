@@ -28,7 +28,7 @@ export class AuthService {
         if (!role) {
             throw new NotFoundException('Role not found');
         }
-        user.role = role._id.toString() // Assuming role is an ObjectId in the User schema
+        user.role = role._id.toString(); // Assuming role is an ObjectId in the User schema
         const newUser = await this.userService.createUser({ ...user, pass });
 
         return {
@@ -38,7 +38,7 @@ export class AuthService {
     }
 
     async login(body: LoginDto) {
-        const userExist = await this.userService.getUserByUser(body.name);
+        const userExist = await this.userService.getUserByEmail(body.email);
         if (!userExist) {
             throw new NotFoundException('User not found');
         }
@@ -47,7 +47,7 @@ export class AuthService {
             throw new NotFoundException('Invalid credentials');
         }
         const payload = { userId: userExist._id, name: userExist.name, role: userExist.role };
-        const jwt = await this.JwtService.signAsync(payload)
+        const jwt = await this.JwtService.signAsync(payload);
 
         if (!jwt) {
             throw new NotFoundException('Error generating token');
