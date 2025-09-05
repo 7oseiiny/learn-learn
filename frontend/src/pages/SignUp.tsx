@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signUp } from '../api/auth';
 
 const SignUp: React.FC = () => {
-    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [error, setError] = useState('');
@@ -17,7 +17,7 @@ const SignUp: React.FC = () => {
         setError('');
         setSuccess('');
         try {
-            await signUp(username, email, pass);
+            await signUp(name, email, pass);
             setSuccess('Sign up successful! You can now sign in.');
             setTimeout(() => navigate('/signin'), 1500);
         } catch (err: any) {
@@ -32,10 +32,10 @@ const SignUp: React.FC = () => {
                 <div>
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder="Name"
                         required
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        value={name}
+                        onChange={e => setName(e.target.value)}
                         style={{ marginBottom: '1rem', padding: '0.5rem' }}
                     />
                 </div>

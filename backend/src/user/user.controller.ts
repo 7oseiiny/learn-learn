@@ -47,10 +47,10 @@ export class UserController {
         schema: {
             type: 'object',
             properties: {
-                file: { type: 'string', format: 'binary'},
-                username: { type: 'string',example: 'ahmed' },
-                email: { type: 'string',example:'ahmedelhoseiny5555@gmail.com' },
-                role: { type: 'string',example: 'admin' },
+                file: { type: 'string', format: 'binary' },
+                name: { type: 'string', example: 'ahmed' },
+                email: { type: 'string', example: 'ahmedelhoseiny5555@gmail.com' },
+                role: { type: 'string', example: 'admin' },
             },
             required: [],
         },
@@ -60,12 +60,12 @@ export class UserController {
         @Body() updateUserDto: UpdateUserDto,
         @CurrentUser() user: any
     ) {
-        return this.userService.updateCurrentUser(user.userId, updateUserDto , file);
+        return this.userService.updateCurrentUser(user.userId, updateUserDto, file);
     }
 
     @Get('image-user/:filename')
     @Authenticated()
-    getProfilePicture(@Param('filename') filename: string , @Res() res: Response) {
-        return this.userService.getProfilePicture(filename , res);
+    getProfilePicture(@Param('filename') filename: string, @Res() res: Response) {
+        return this.userService.getProfilePicture(filename, res);
     }
 }

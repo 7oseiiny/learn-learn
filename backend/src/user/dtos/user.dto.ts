@@ -1,11 +1,12 @@
 import { IsOptional, IsString } from "class-validator";
 
+
 export class UserDto {
     @IsString()
     id: number;
-    
+
     @IsString()
-    username: string;
+    name: string;
 
     @IsString()
     email: string;
@@ -17,9 +18,10 @@ export class UserDto {
     role: string;
 }
 
+
 export class CreateUserDto {
     @IsString()
-    username: string;
+    name: string;
 
     @IsString()
     email: string;
@@ -28,13 +30,14 @@ export class CreateUserDto {
     pass: string;
 
     @IsString()
-    role: string
+    role: string;
 }
+
 
 export class UpdateUserDto {
     @IsString()
     @IsOptional()
-    username?: string;
+    name?: string;
 
     @IsString()
     @IsOptional()
@@ -46,7 +49,7 @@ export class UpdateUserDto {
 
     @IsString()
     @IsOptional()
-    role: string
+    role: string;
 
     @IsString()
     @IsOptional()

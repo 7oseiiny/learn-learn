@@ -7,14 +7,14 @@ import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 import { join } from 'path';
 import { unlink, unlinkSync } from 'fs';
- 
+
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel(User.name)
         private readonly UserModule: Model<User>
     ) { }
-    
+
     async getUsers() {
         const users = await this.UserModule.find();
         return users;
@@ -24,26 +24,26 @@ export class UserService {
         return user
     }
     async getUserById(id: string) {
-        const user = await this.UserModule.findById( id );
+        const user = await this.UserModule.findById(id);
         return user;
     }
-    async getUserByUser(username: string) {
-        const userExist = await this.UserModule.findOne({ username });
+    async getUserByUser(name: string) {
+        const userExist = await this.UserModule.findOne({ name });
         return userExist;
     }
-    async getCurrentUser(id :string) {
+    async getCurrentUser(id: string) {
         return await this.UserModule.findById(id)
     }
-    
-    async updateCurrentUser(id :string , updateUserDto: UpdateUserDto , file ?: Express.Multer.File) {
+
+    async updateCurrentUser(id: string, updateUserDto: UpdateUserDto, file?: Express.Multer.File) {
         let updateData = { ...updateUserDto };
         file ? updateData.file = file.filename : updateData.file = ''
-        this.removeRelatedFile(id,updateData);
+        this.removeRelatedFile(id, updateData);
         return await this.UserModule.updateOne({ _id: id }, updateData);
     }
-    
-    async getProfilePicture(filename: string , res : Response) {
-        return res.sendFile(filename, {root: 'uploads'})
+
+    async getProfilePicture(filename: string, res: Response) {
+        return res.sendFile(filename, { root: 'uploads' })
     }
 
     async removeRelatedFile(id: string, updateData: UpdateUserDto) {

@@ -17,7 +17,7 @@ export class AuthService {
     ) { }
 
     async register(user: CreateUserDto) {
-        const userExist = await this.userService.getUserByUser(user.username);
+        const userExist = await this.userService.getUserByUser(user.name);
         if (userExist) {
             throw new NotFoundException('User already exists');
         }
@@ -38,7 +38,7 @@ export class AuthService {
     }
 
     async login(body: LoginDto) {
-        const userExist = await this.userService.getUserByUser(body.username);
+        const userExist = await this.userService.getUserByUser(body.name);
         if (!userExist) {
             throw new NotFoundException('User not found');
         }
@@ -46,7 +46,7 @@ export class AuthService {
         if (!isMatch) {
             throw new NotFoundException('Invalid credentials');
         }
-        const payload = { userId: userExist._id, username: userExist.username, role: userExist.role };
+        const payload = { userId: userExist._id, name: userExist.name, role: userExist.role };
         const jwt = await this.JwtService.signAsync(payload)
 
         if (!jwt) {
