@@ -13,7 +13,11 @@ const SignIn: React.FC = () => {
         e.preventDefault();
         setError('');
         try {
-            await signIn(email, password);
+            const data = await signIn(email, password);
+            if (data && data.access_token) {
+                localStorage.setItem('token', data.access_token);
+                window.dispatchEvent(new Event('authChange'));
+            }
             navigate('/');
         } catch (err: any) {
             setError(err?.response?.data?.message || 'Sign in failed');
