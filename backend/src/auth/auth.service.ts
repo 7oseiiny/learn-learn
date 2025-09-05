@@ -17,9 +17,20 @@ export class AuthService {
     ) { }
 
     async register(user: CreateUserDto) {
-        const userExist = await this.userService.getUserByUser(user.name);
+        // Check for existing user by email
+        const userExist = await this.userService.getUserByEmail(user.email);
         if (userExist) {
             throw new NotFoundException('User already exists');
+        }
+        // Password validation is handled by DTO, but double-check for safety
+        if (user.name.trim().length < 3) {
+            throw new NotFoundException('Name must be at least 3 characters.');
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+            throw new NotFoundException('Invalid email format.');
+        }
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(user.pass)) {
+            throw new NotFoundException('Password must be at least 8 characters, include a letter, a number, and a special character.');
         }
         const salt = bcrypt.genSaltSync(10);
         const pass = bcrypt.hashSync(user.pass, salt);
