@@ -5,9 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import { LoginDto } from './dtos/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RoleService } from 'src/role/role.service';
-import { MailModule } from 'src/mail/mail.module';
 import { MailerService } from '@nestjs-modules/mailer';
-import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +14,6 @@ export class AuthService {
         private readonly JwtService: JwtService,
         private readonly userService: UserService,
         private readonly roleService: RoleService,
-        private readonly mailService: MailService
     ) { }
 
     async register(user: CreateUserDto) {
