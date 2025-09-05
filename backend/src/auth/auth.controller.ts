@@ -9,6 +9,16 @@ export class AuthController {
     constructor(
         private readonly authService: AuthService,
     ) { }
+    @ApiBody({
+        schema: {
+            example: {
+                name: 'ahmed',
+                email: 'ahmed@gmail.com',
+                pass: 'Password@123',
+                role: 'admin'
+            }
+        }
+    })
     @Post('register')
     async register(@Body() body: CreateUserDto) {
         return this.authService.register(body);
